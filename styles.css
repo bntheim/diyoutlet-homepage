@@ -305,7 +305,27 @@ h1, h2, h3, p { margin-top: 0; }
    ========================================================= */
 .products-page .site-header { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 14%, transparent); }
 .products-page .main-menu [aria-current="page"] { color: var(--navy); }
-.catalog-hero { min-height: 78svh; padding-top: 86px; display: flex; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.catalog-hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 100svh; padding-top: 86px; display: flex; align-items: center;
+  color: var(--cream); border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+/* 기존 히어로 이미지와 느린 줌을 제품 첫 화면에도 복구 */
+.catalog-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: url("assets/hero.png") center / cover no-repeat;
+  animation: heroZoom 16s ease-out both;
+}
+/* 헤더 아래부터 어두운 스크림을 깔아 본문 가독성을 확보 */
+.catalog-hero::after {
+  content: ""; position: absolute; inset: 86px 0 0; z-index: -1;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--ink) 82%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 42%, transparent) 60%,
+    color-mix(in srgb, var(--ink) 16%, transparent) 100%);
+}
+.catalog-hero > .container { position: relative; z-index: 1; }
+.catalog-hero .section-label { color: var(--cream); }
 .catalog-hero h1 {
   max-width: 13ch; margin-bottom: 36px; font-family: var(--serif); font-size: clamp(58px, 7vw, 104px);
   font-weight: 400; line-height: 1.14; letter-spacing: -.055em;
@@ -331,7 +351,15 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 @media (max-width: 580px) {
-  .catalog-hero { min-height: 86svh; padding-top: 72px; }
+  .catalog-hero { min-height: 100svh; padding-top: 72px; }
+  .catalog-hero::before { background-position: 68% center; }
+  .catalog-hero::after {
+    inset: 72px 0 0;
+    background: linear-gradient(0deg,
+      color-mix(in srgb, var(--ink) 88%, transparent) 0%,
+      color-mix(in srgb, var(--ink) 54%, transparent) 68%,
+      color-mix(in srgb, var(--ink) 20%, transparent) 100%);
+  }
   .catalog-hero h1 { font-size: 48px; }
   .catalog-heading { margin-bottom: 15vh; }
   .catalog-heading h2 { font-size: 48px; }
