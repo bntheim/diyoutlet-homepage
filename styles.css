@@ -50,12 +50,17 @@ h1, h2, h3, p { margin-top: 0; }
 .main-menu a:hover { color: var(--navy); }
 .menu-toggle { display: none; border: 0; background: none; color: inherit; padding: 10px; }
 
-/* 히어로: 이미지를 크게 쓰고 텍스트 아래에 스크림을 둡니다 */
+/* 히어로: 스크럽 영상과 포스터를 크게 쓰고 텍스트 아래에 스크림을 둡니다 */
 .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; }
 .hero-image {
-  position: absolute; inset: 0; background: url("assets/hero.png") center / cover no-repeat;
-  animation: heroZoom 16s ease-out both;
+  position: absolute; inset: 0; background: var(--ink);
 }
+.hero-poster, .hero-scrub-video, .hero-poster img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+.hero-poster img, .hero-scrub-video { object-fit: cover; object-position: center; }
+.hero-scrub-video { opacity: 0; transition: opacity .35s ease; }
+.hero-scrub-video.is-ready { opacity: 1; }
 .hero-shade {
   position: absolute; inset: 0;
   background: linear-gradient(90deg, color-mix(in srgb, var(--ink) 82%, transparent) 0%, color-mix(in srgb, var(--ink) 34%, transparent) 58%, color-mix(in srgb, var(--ink) 10%, transparent) 100%);
@@ -218,6 +223,7 @@ h1, h2, h3, p { margin-top: 0; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .hero-image { transform: none !important; }
+  .hero-scrub-video { display: none; }
   .reveal { opacity: 1; transform: none; }
 }
 

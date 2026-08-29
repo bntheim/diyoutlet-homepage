@@ -47,6 +47,74 @@ function observeRevealElements(root = document) {
 
 observeRevealElements();
 
+// 히어로 영상은 자동재생하지 않고 현재 스크롤 위치에 맞춰 프레임만 이동합니다.
+function initHeroScrub() {
+  const hero = document.querySelector('.hero');
+  const video = hero?.querySelector('.hero-scrub-video');
+  if (!hero || !video) return;
+
+  // 움직임 축소 환경에서는 비디오 로딩과 스크럽을 모두 끄고 포스터만 표시합니다.
+  if (reducedMotion) {
+    video.pause();
+    video.querySelectorAll('source').forEach((source) => source.removeAttribute('src'));
+    video.load();
+    return;
+  }
+
+  let duration = 0;
+  let currentTime = 0;
+  let targetTime = 0;
+  let animationFrame = 0;
+
+  const renderFrame = () => {
+    const difference = targetTime - currentTime;
+    currentTime = Math.abs(difference) < 0.008 ? targetTime : currentTime + difference * 0.24;
+
+    if (video.readyState >= 2 && Math.abs(video.currentTime - currentTime) >= 1 / 48) {
+      try {
+        video.currentTime = currentTime;
+        video.dataset.scrubTime = currentTime.toFixed(3);
+        delete video.dataset.scrubError;
+      } catch (error) {
+        video.dataset.scrubError = error instanceof Error ? error.message : String(error);
+        animationFrame = 0;
+        return;
+      }
+    }
+
+    if (Math.abs(targetTime - currentTime) >= 0.008) {
+      animationFrame = requestAnimationFrame(renderFrame);
+    } else {
+      animationFrame = 0;
+    }
+  };
+
+  const updateScrubTarget = () => {
+    if (!duration) return;
+    const progress = Math.min(Math.max(window.scrollY / Math.max(hero.offsetHeight, 1), 0), 1);
+    targetTime = progress * Math.max(duration - 1 / 24, 0);
+    video.dataset.scrubTarget = targetTime.toFixed(3);
+    if (!animationFrame) animationFrame = requestAnimationFrame(renderFrame);
+  };
+
+  const prepareVideo = () => {
+    duration = Number.isFinite(video.duration) ? video.duration : 0;
+    video.pause();
+    currentTime = Math.min(video.currentTime, duration || 0);
+    updateScrubTarget();
+  };
+
+  video.addEventListener('loadedmetadata', prepareVideo, { once: true });
+  video.addEventListener('loadeddata', () => video.classList.add('is-ready'), { once: true });
+  window.addEventListener('scroll', updateScrubTarget, { passive: true });
+  window.addEventListener('resize', updateScrubTarget, { passive: true });
+
+  if (video.readyState >= 1) prepareVideo();
+  if (video.readyState >= 2) video.classList.add('is-ready');
+}
+
+initHeroScrub();
+
 // 제품 문구가 한국어 의미 단위에서 자연스럽게 줄바꿈되도록 지정합니다.
 // products.json의 문구 자체는 변경하지 않고 화면에 표시할 때만 줄을 나눕니다.
 const taglineLines = {
