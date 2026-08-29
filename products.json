@@ -2,26 +2,30 @@
   {
     "name": "스텐 뱅뱅이 사각 쓰레기통 뚜껑 매립 스윙휴지통",
     "price": "49,000원",
-    "image": "assets/product01.png",
-    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13616048070"
+    "image": "assets/product04.png",
+    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13616048070",
+    "tagline": "공간은 깔끔하게, 쓰레기는 보이지 않게"
   },
   {
     "name": "무타공 벽걸이 샴푸 바디워시 디스펜서 욕실 펌프형 380ml",
     "price": "16,900원",
-    "image": "assets/product02.png",
-    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13646055466"
+    "image": "assets/product03.png",
+    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13646055466",
+    "tagline": "굴러다니는 샴푸통, 한 번에 정리"
   },
   {
     "name": "무소음 자동물내림 센서 양변기 변기커버 대형 47cm",
     "price": "55,000원",
-    "image": "assets/product03.png",
-    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13139098453"
+    "image": "assets/product01.png",
+    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13139098453",
+    "tagline": "손대지 않고 물내림이 필요할 때"
   },
   {
     "name": "코쿠보 이동식화장실 휴대용 캠핑 차량용 변기",
     "price": "42,900원",
-    "image": "assets/product04.png",
-    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13689369779"
+    "image": "assets/product02.png",
+    "purchaseUrl": "https://smartstore.naver.com/diyoutlet/products/13689369779",
+    "tagline": "화장실이 없는 곳에서도 든든하게"
   }
 ]
 
