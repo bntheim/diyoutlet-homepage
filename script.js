@@ -47,33 +47,33 @@ function observeRevealElements(root = document) {
 
 observeRevealElements();
 
-// products.json의 제품 한 개를 카드 요소로 만듭니다.
-function createProductCard(product, index, catalogCard = false) {
-  const card = document.createElement('article');
-  card.className = catalogCard ? 'catalog-card reveal' : 'product-card reveal';
-
+function createProductImage(product, loading = 'lazy') {
   const photoLink = document.createElement('a');
-  photoLink.className = 'product-photo';
+  photoLink.className = 'curated-product-photo';
   photoLink.href = product.purchaseUrl;
   photoLink.target = '_blank';
   photoLink.rel = 'noopener noreferrer';
-  photoLink.setAttribute('aria-label', `${product.name} 구매하기`);
+  photoLink.setAttribute('aria-label', `${product.name} 스마트스토어에서 구매`);
 
   const image = document.createElement('img');
   image.src = product.image;
   image.alt = product.name;
-  image.loading = 'lazy';
+  image.loading = loading;
+  photoLink.appendChild(image);
+  return photoLink;
+}
 
-  const number = document.createElement('span');
-  number.textContent = String(index + 1).padStart(2, '0');
-  photoLink.append(image, number);
-
+function createProductDetails(product, labelText) {
   const copy = document.createElement('div');
-  copy.className = 'product-copy';
+  copy.className = 'curated-product-copy';
 
   const label = document.createElement('p');
   label.className = 'product-category';
-  label.textContent = `PRODUCT ${String(index + 1).padStart(2, '0')}`;
+  label.textContent = labelText;
+
+  const tagline = document.createElement('p');
+  tagline.className = 'curated-tagline';
+  tagline.textContent = product.tagline;
 
   const name = document.createElement('h3');
   name.textContent = product.name;
@@ -83,44 +83,75 @@ function createProductCard(product, index, catalogCard = false) {
   price.textContent = product.price;
 
   const buyLink = document.createElement('a');
-  buyLink.className = catalogCard ? 'button product-buy-button' : 'text-link';
+  buyLink.className = 'button curated-buy-button';
   buyLink.href = product.purchaseUrl;
   buyLink.target = '_blank';
   buyLink.rel = 'noopener noreferrer';
-  buyLink.innerHTML = '구매하기 <span aria-hidden="true">↗</span>';
+  buyLink.textContent = '스마트스토어에서 구매 ↗';
 
-  copy.append(label, name, price, buyLink);
-  card.append(photoLink, copy);
-  return card;
+  copy.append(label, tagline, name, price, buyLink);
+  return copy;
 }
 
-// 같은 데이터에서 홈은 대표 3개, 제품 페이지는 전체 제품을 표시합니다.
+// products.json의 첫 번째 제품을 대표 상품으로 크게 표시합니다.
+function createFeaturedProduct(product) {
+  const article = document.createElement('article');
+  article.className = 'curated-featured reveal';
+  article.append(
+    createProductImage(product, 'eager'),
+    createProductDetails(product, 'FEATURED PRODUCT')
+  );
+  return article;
+}
+
+// 대표 제품 아래에 표시할 큐레이션 카드입니다.
+function createCuratedProductCard(product, index) {
+  const article = document.createElement('article');
+  article.className = 'curated-card reveal';
+  article.append(
+    createProductImage(product),
+    createProductDetails(product, `CURATED ${String(index + 2).padStart(2, '0')}`)
+  );
+  return article;
+}
+
+// 홈과 제품 페이지 모두 같은 products.json 큐레이션을 사용합니다.
 async function loadProducts() {
-  const productLists = document.querySelectorAll('[data-product-list]');
-  if (!productLists.length) return;
+  const productSections = document.querySelectorAll('[data-product-curation]');
+  if (!productSections.length) return;
 
   try {
     const response = await fetch('products.json');
     if (!response.ok) throw new Error('제품 데이터를 불러오지 못했습니다.');
 
     const products = await response.json();
-    productLists.forEach((list) => {
-      const limit = Number(list.dataset.limit) || products.length;
-      const visibleProducts = products.slice(0, limit);
-      const catalogCard = list.classList.contains('catalog-grid');
+    productSections.forEach((section) => {
+      section.replaceChildren();
+      if (!products.length) {
+        const message = document.createElement('p');
+        message.className = 'product-status';
+        message.textContent = '등록된 제품이 없습니다.';
+        section.appendChild(message);
+        return;
+      }
 
-      list.replaceChildren();
-      visibleProducts.forEach((product, index) => {
-        list.appendChild(createProductCard(product, index, catalogCard));
-      });
-      observeRevealElements(list);
+      section.appendChild(createFeaturedProduct(products[0]));
+      if (products.length > 1) {
+        const grid = document.createElement('div');
+        grid.className = 'curated-grid';
+        products.slice(1).forEach((product, index) => {
+          grid.appendChild(createCuratedProductCard(product, index));
+        });
+        section.appendChild(grid);
+      }
+      observeRevealElements(section);
     });
   } catch (error) {
-    productLists.forEach((list) => {
+    productSections.forEach((section) => {
       const message = document.createElement('p');
       message.className = 'product-status';
       message.textContent = '제품을 불러오지 못했습니다. 잠시 후 다시 확인해주세요.';
-      list.replaceChildren(message);
+      section.replaceChildren(message);
     });
     console.error(error);
   }
