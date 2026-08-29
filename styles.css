@@ -219,3 +219,82 @@ h1, h2, h3, p { margin-top: 0; }
   .reveal { opacity: 1; transform: none; }
 }
 
+/* =========================================================
+   내 소개 페이지
+   ========================================================= */
+.about-page .site-header { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 14%, transparent); }
+.about-page .main-menu [aria-current="page"] { color: var(--navy); }
+.about-hero { min-height: 100svh; padding-top: 86px; display: flex; align-items: center; }
+.about-hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: clamp(60px, 8vw, 140px); padding-block: max(10vh, 72px); }
+.about-hero-copy h1 {
+  max-width: 12ch; margin-bottom: 38px; font-family: var(--serif);
+  font-size: clamp(54px, 6.4vw, 96px); font-weight: 400; line-height: 1.17; letter-spacing: -.055em;
+}
+.about-hero-copy > p:last-child { max-width: 35ch; margin: 0; }
+.about-portrait { margin: 0; }
+.photo-placeholder {
+  aspect-ratio: 4 / 5; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--navy); color: var(--cream); text-align: center;
+}
+.photo-placeholder span { font-family: var(--serif); font-size: clamp(32px, 4vw, 54px); letter-spacing: -.03em; }
+.photo-placeholder p { margin: 8px 0 0; font-size: 12px; letter-spacing: .08em; }
+.about-portrait figcaption { margin-top: 12px; font-size: 11px; letter-spacing: .08em; text-align: right; }
+.about-story { border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.about-story-grid, .customer-story-grid { display: grid; grid-template-columns: .35fr 1fr; gap: 7vw; }
+.about-prose h2, .customer-story h2, .timeline-heading h2 {
+  margin-bottom: 72px; font-family: var(--serif); font-size: clamp(48px, 5.8vw, 86px);
+  font-weight: 400; line-height: 1.2; letter-spacing: -.055em;
+}
+.about-prose-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 64px; max-width: 900px; }
+.about-prose-columns p, .customer-story p { max-width: 40ch; margin: 0; }
+.owner-quote { margin: 0; padding-block: max(18vh, 150px); background: var(--navy); color: var(--cream); }
+.owner-quote p {
+  max-width: 15ch; margin: 0 auto 44px; font-family: var(--serif); text-align: center;
+  font-size: clamp(52px, 7vw, 104px); font-weight: 400; line-height: 1.2; letter-spacing: -.055em;
+}
+.owner-quote cite { display: block; font-size: 11px; font-style: normal; letter-spacing: .14em; text-align: center; }
+.customer-story-grid > div > p { margin-bottom: 22px; }
+.owner-timeline { background: var(--ink); color: var(--cream); }
+.timeline-heading { display: grid; grid-template-columns: .35fr 1fr; gap: 7vw; margin-bottom: max(15vh, 120px); }
+.timeline-heading h2 { margin: 0; }
+.timeline-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in srgb, var(--cream) 22%, transparent); }
+.timeline-list li {
+  min-height: 150px; display: grid; grid-template-columns: 70px .8fr 1fr; align-items: center; gap: 28px;
+  border-bottom: 1px solid color-mix(in srgb, var(--cream) 22%, transparent);
+}
+.timeline-list span { font-size: 10px; letter-spacing: .16em; }
+.timeline-list h3 { margin: 0; font-family: var(--serif); font-size: clamp(25px, 2.6vw, 38px); font-weight: 400; }
+.timeline-list p { max-width: 34ch; margin: 0; }
+.owner-promise { min-height: 100svh; display: flex; align-items: center; background: var(--navy); color: var(--cream); text-align: center; }
+.owner-promise > .container > p { margin-bottom: 28px; font-size: 11px; font-weight: 700; letter-spacing: .18em; }
+.owner-promise h2 {
+  margin-bottom: 52px; font-family: var(--serif); font-size: clamp(52px, 7vw, 104px);
+  font-weight: 400; line-height: 1.16; letter-spacing: -.055em;
+}
+.owner-promise .button { margin-inline: auto; }
+
+@media (max-width: 800px) {
+  .about-page .main-menu { color: var(--ink); }
+  .about-hero-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .about-story-grid, .customer-story-grid, .timeline-heading { grid-template-columns: 1fr; gap: 48px; }
+  .timeline-list li { grid-template-columns: 48px 1fr; padding-block: 28px; }
+  .timeline-list p { grid-column: 2; }
+}
+
+@media (max-width: 580px) {
+  .about-hero { padding-top: 72px; }
+  .about-hero-grid { grid-template-columns: 1fr; padding-block: 12vh 15vh; }
+  .about-hero-copy h1 { font-size: 46px; }
+  .about-portrait { margin-top: 8vh; }
+  .photo-placeholder { aspect-ratio: 4 / 5; }
+  .about-prose h2, .customer-story h2, .timeline-heading h2 { margin-bottom: 52px; font-size: 45px; }
+  .about-prose-columns { grid-template-columns: 1fr; gap: 24px; }
+  .owner-quote { padding-block: 18vh; }
+  .owner-quote p { font-size: 46px; }
+  .timeline-heading { margin-bottom: 15vh; }
+  .timeline-list li { grid-template-columns: 36px 1fr; gap: 12px; }
+  .timeline-list h3 { font-size: 27px; }
+  .timeline-list p { font-size: 14px; }
+  .owner-promise h2 { font-size: 46px; }
+}
+
