@@ -22,16 +22,24 @@ window.addEventListener('scroll', updateHeader, { passive: true });
 updateHeader();
 
 // 화면에 들어온 요소를 한 번만 부드럽게 표시
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -30px' });
+// 움직임 축소 설정이 켜진 환경에서는 애니메이션 없이 바로 표시합니다.
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+if (reducedMotion) {
+  document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
+} else {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px' });
+
+  document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+}
 
 // 푸터 연도 자동 표시
 document.querySelector('#year').textContent = new Date().getFullYear();
+
