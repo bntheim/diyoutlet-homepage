@@ -47,6 +47,31 @@ function observeRevealElements(root = document) {
 
 observeRevealElements();
 
+// 제품 문구가 한국어 의미 단위에서 자연스럽게 줄바꿈되도록 지정합니다.
+// products.json의 문구 자체는 변경하지 않고 화면에 표시할 때만 줄을 나눕니다.
+const taglineLines = {
+  '공간은 깔끔하게, 쓰레기는 보이지 않게': [['공간은 깔끔하게,'], ['쓰레기는', '보이지 않게']],
+  '굴러다니는 샴푸통, 한 번에 정리': [['굴러다니는 샴푸통,'], ['한 번에 정리']],
+  '손대지 않고 물내림이 필요할 때': [['손대지 않고'], ['물내림이 필요할 때']],
+  '화장실이 없는 곳에서도 든든하게': [['화장실이', '없는 곳에서도'], ['든든하게']]
+};
+
+function setTaglineText(element, text) {
+  const lines = taglineLines[text] || [[text]];
+  lines.forEach((units) => {
+    const lineElement = document.createElement('span');
+    lineElement.className = 'tagline-line';
+    units.forEach((unit, index) => {
+      if (index) lineElement.appendChild(document.createTextNode(' '));
+      const unitElement = document.createElement('span');
+      unitElement.className = 'tagline-unit';
+      unitElement.textContent = unit;
+      lineElement.appendChild(unitElement);
+    });
+    element.appendChild(lineElement);
+  });
+}
+
 function createProductImage(product, loading = 'lazy') {
   const photoLink = document.createElement('a');
   photoLink.className = 'curated-product-photo';
@@ -73,7 +98,7 @@ function createProductDetails(product, labelText) {
 
   const tagline = document.createElement('p');
   tagline.className = 'curated-tagline';
-  tagline.textContent = product.tagline;
+  setTaglineText(tagline, product.tagline);
 
   const name = document.createElement('h3');
   name.textContent = product.name;
