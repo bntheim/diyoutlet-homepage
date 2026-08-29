@@ -62,30 +62,31 @@ function initHeroScrub() {
   }
 
   let duration = 0;
-  let currentTime = 0;
   let targetTime = 0;
-  let animationFrame = 0;
+  let hasPendingSeek = false;
 
-  const renderFrame = () => {
-    const difference = targetTime - currentTime;
-    currentTime = Math.abs(difference) < 0.008 ? targetTime : currentTime + difference * 0.24;
+  // 한 프레임의 디코딩이 끝난 뒤 다음 위치를 요청합니다.
+  // 탐색 중 currentTime을 계속 덮어쓰면 브라우저가 첫 프레임만 보여줄 수 있습니다.
+  const applyScrubFrame = () => {
+    if (!duration || video.readyState < 2) return;
 
-    if (video.readyState >= 2 && Math.abs(video.currentTime - currentTime) >= 1 / 48) {
-      try {
-        video.currentTime = currentTime;
-        video.dataset.scrubTime = currentTime.toFixed(3);
-        delete video.dataset.scrubError;
-      } catch (error) {
-        video.dataset.scrubError = error instanceof Error ? error.message : String(error);
-        animationFrame = 0;
-        return;
-      }
+    if (video.seeking) {
+      hasPendingSeek = true;
+      return;
     }
 
-    if (Math.abs(targetTime - currentTime) >= 0.008) {
-      animationFrame = requestAnimationFrame(renderFrame);
-    } else {
-      animationFrame = 0;
+    if (Math.abs(video.currentTime - targetTime) < 1 / 48) {
+      video.dataset.scrubTime = video.currentTime.toFixed(3);
+      hasPendingSeek = false;
+      return;
+    }
+
+    try {
+      hasPendingSeek = false;
+      video.currentTime = targetTime;
+      delete video.dataset.scrubError;
+    } catch (error) {
+      video.dataset.scrubError = error instanceof Error ? error.message : String(error);
     }
   };
 
@@ -94,18 +95,27 @@ function initHeroScrub() {
     const progress = Math.min(Math.max(window.scrollY / Math.max(hero.offsetHeight, 1), 0), 1);
     targetTime = progress * Math.max(duration - 1 / 24, 0);
     video.dataset.scrubTarget = targetTime.toFixed(3);
-    if (!animationFrame) animationFrame = requestAnimationFrame(renderFrame);
+    applyScrubFrame();
   };
 
   const prepareVideo = () => {
     duration = Number.isFinite(video.duration) ? video.duration : 0;
     video.pause();
-    currentTime = Math.min(video.currentTime, duration || 0);
     updateScrubTarget();
   };
 
   video.addEventListener('loadedmetadata', prepareVideo, { once: true });
-  video.addEventListener('loadeddata', () => video.classList.add('is-ready'), { once: true });
+  video.addEventListener('loadeddata', () => {
+    video.classList.add('is-ready');
+    applyScrubFrame();
+  }, { once: true });
+  video.addEventListener('seeked', () => {
+    video.dataset.scrubTime = video.currentTime.toFixed(3);
+    video.classList.add('is-ready');
+
+    // 스크롤 중 목표가 바뀌었다면 가장 최근 위치로 이어서 이동합니다.
+    if (hasPendingSeek || Math.abs(video.currentTime - targetTime) >= 1 / 48) applyScrubFrame();
+  });
   window.addEventListener('scroll', updateScrubTarget, { passive: true });
   window.addEventListener('resize', updateScrubTarget, { passive: true });
 
@@ -182,7 +192,17 @@ function createProductDetails(product, labelText) {
   buyLink.rel = 'noopener noreferrer';
   buyLink.textContent = '스마트스토어에서 구매 ↗';
 
-  copy.append(label, tagline, name, price, buyLink);
+  // products.json의 값으로 장바구니 버튼 속성을 자동 구성합니다.
+  const cartButton = document.createElement('button');
+  cartButton.type = 'button';
+  cartButton.className = 'button curated-cart-button';
+  cartButton.dataset.cartAdd = '';
+  cartButton.dataset.name = product.name;
+  cartButton.dataset.price = String(product.price).replace(/[^0-9]/g, '');
+  cartButton.dataset.url = product.purchaseUrl;
+  cartButton.textContent = '장바구니 담기';
+
+  copy.append(label, tagline, name, price, cartButton, buyLink);
   return copy;
 }
 
@@ -327,4 +347,3 @@ loadHomeStories();
 // 푸터 연도 자동 표시
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
-
