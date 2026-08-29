@@ -155,7 +155,7 @@ h1, h2, h3, p { margin-top: 0; }
 .footer-top p { max-width: 40ch; margin: 0; }
 .footer-bottom { padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--cream) 20%, transparent); font-size: 10px; letter-spacing: .08em; }
 .footer-bottom p { margin: 0; }
-.footer-bottom div { display: flex; gap: 28px; }
+.footer-bottom div { display: flex; flex-wrap: wrap; gap: 12px 28px; }
 .footer-bottom a:hover { color: var(--cream); text-decoration: underline; }
 
 /* 허용된 두 가지 움직임: 스크롤 리빌 + 히어로 줌 */
@@ -449,5 +449,49 @@ h1, h2, h3, p { margin-top: 0; }
   .post-body { font-size: 16px; }
   .post-navigation { grid-template-columns: 1fr; gap: 36px; }
   .post-navigation .next { text-align: left; }
+}
+
+/* =========================================================
+   연락하기 페이지
+   ========================================================= */
+.contact-page .site-header { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 14%, transparent); }
+.contact-page .main-menu [aria-current="page"] { color: var(--navy); }
+.contact-hero { min-height: 100svh; padding-top: 86px; display: flex; align-items: center; }
+.contact-grid {
+  display: grid; grid-template-columns: minmax(0, .8fr) minmax(480px, 1.2fr);
+  align-items: center; gap: clamp(64px, 9vw, 150px); padding-block: max(15vh, 120px);
+}
+.contact-copy h1 {
+  max-width: 12ch; margin-bottom: 38px; font-family: var(--serif); font-size: clamp(54px, 6.4vw, 94px);
+  font-weight: 400; line-height: 1.17; letter-spacing: -.055em;
+}
+.contact-copy > p:last-child { max-width: 38ch; margin: 0; }
+.contact-actions { border-top: 1px solid var(--ink); }
+.contact-button {
+  min-height: 154px; display: grid; grid-template-columns: 120px 1fr auto; align-items: center; gap: 24px;
+  padding: 28px 4px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+}
+.contact-button > span { color: var(--navy); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.contact-button strong { font-family: var(--serif); font-size: clamp(25px, 2.7vw, 38px); font-weight: 400; line-height: 1.3; }
+.contact-button small { font-size: 11px; white-space: nowrap; }
+.contact-button:hover { padding-inline: 22px; background: var(--navy); color: var(--cream); }
+.contact-button:hover > span { color: var(--cream); }
+
+@media (max-width: 900px) {
+  .contact-page .main-menu { color: var(--ink); }
+  .contact-grid { grid-template-columns: 1fr; gap: max(15vh, 120px); }
+}
+
+@media (max-width: 580px) {
+  .contact-hero { padding-top: 72px; }
+  .contact-grid { gap: 15vh; padding-block: 15vh; }
+  .contact-copy h1 { font-size: 47px; }
+  .contact-button {
+    min-height: 128px; grid-template-columns: 1fr; gap: 6px;
+    padding: 24px 4px;
+  }
+  .contact-button strong { font-size: 28px; overflow-wrap: anywhere; }
+  .contact-button small { margin-top: 8px; }
+  .contact-button:hover { padding-inline: 16px; }
 }
 
