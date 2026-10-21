@@ -1,0 +1,22 @@
+# DIYOUTLET
+
+DIYOUTLET은 생활 속 불편을 줄이는 실용적인 생활용품을 고르고 소개합니다.
+
+## 판매 제품
+
+주방, 욕실, 생활공간에서 실제로 필요한 생활용품을 판매합니다.
+
+## 주요 페이지
+
+- [홈](https://diyoutlet-homepage.vercel.app/): DIYOUTLET 브랜드와 대표 제품 안내
+- [제품](https://diyoutlet-homepage.vercel.app/products.html): 판매 중인 생활용품과 스마트스토어 연결
+- [내 소개](https://diyoutlet-homepage.vercel.app/about.html): DIYOUTLET 운영자의 시작과 제품 선정 기준
+- [연락하기](https://diyoutlet-homepage.vercel.app/contact.html): 이메일, 인스타그램, 스마트스토어 안내
+- [이야기](https://diyoutlet-homepage.vercel.app/story/): 제품 선택과 브랜드 운영에 관한 글 목록
+
+## 이야기(블로그)
+
+- [생활용품을 고르기 전에 제품 규격은 어떻게 확인하나요?](https://diyoutlet-homepage.vercel.app/story/how-to-check-product-size.html): 제품명 숫자, 상세 치수, 설치 공간 실측을 같은 기준으로 비교하는 순서
+- [작은 호기심으로 온라인 판매를 시작했습니다](https://diyoutlet-homepage.vercel.app/story/post.html?id=small-curiosity-diyoutlet-20260829): 직장생활과 유통 현장을 지켜본 경험이 온라인 판매로 이어진 이야기
+- [우리가 이 브랜드를 시작한 이유](https://diyoutlet-homepage.vercel.app/story/post.html?id=first-story-20260829): 생활 속 작은 불편에서 시작한 브랜드의 첫 마음
+- [패키지 하나를 바꾸는 데 석 달이 걸린 이야기](https://diyoutlet-homepage.vercel.app/story/post.html?id=behind-package-20260829): 한 줄 후기를 계기로 패키지를 다시 살펴본 과정
