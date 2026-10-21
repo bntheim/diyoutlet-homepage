@@ -1,0 +1,23 @@
+# DIYOUTLET
+
+> 생활의 쓰임을 이해하고 정직하게 소개하는 다이샵아울렛입니다.
+
+다이샵아울렛은 생활에 필요한 제품을 직접 이해하고 소개합니다.
+
+## 판매하는 것
+
+주방, 욕실, 수납과 일상 공간에서 사용하는 생활용품을 판매합니다.
+
+## 페이지 안내
+
+- [홈](https://diyoutlet-homepage.vercel.app/): 다이샵아울렛 브랜드와 대표 제품 안내
+- [제품](https://diyoutlet-homepage.vercel.app/products.html): 판매 중인 생활용품 목록과 스마트스토어 연결
+- [내 소개](https://diyoutlet-homepage.vercel.app/about.html): 운영자의 시작과 제품을 고르는 기준
+- [이야기](https://diyoutlet-homepage.vercel.app/story/): 제품과 브랜드에 관한 글 목록
+- [연락하기](https://diyoutlet-homepage.vercel.app/contact.html): 이메일, 인스타그램, 스마트스토어 연락처
+
+## 이야기(블로그)
+
+- [작은 호기심으로 온라인 판매를 시작했습니다](https://diyoutlet-homepage.vercel.app/story/small-curiosity-online-sales.html): 15년의 직장생활과 유통 경험이 온라인 판매의 시작으로 이어진 이야기
+- [우리가 이 브랜드를 시작한 이유](https://diyoutlet-homepage.vercel.app/story/why-we-started-brand.html): 작은 불편에서 시작된 고민과 브랜드가 지키고 싶은 기준
+- [패키지 하나를 바꾸는 데 석 달이 걸린 이야기](https://diyoutlet-homepage.vercel.app/story/package-change-three-months.html): 고객의 한 줄 후기에서 시작된 패키지 개선 이야기
