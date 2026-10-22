@@ -16,6 +16,7 @@ DIYOUTLET은 생활 속 불편을 줄이는 실용적인 생활용품을 고르�
 
 ## 이야기(블로그)
 
+- [생활용품 설치 전 우리 집에 설치 가능한지 어떻게 확인하나요?](https://diyoutlet-homepage.vercel.app/story/how-to-check-installation-compatibility.html): 부착면과 설치 공간, 주변 구조를 제품 정보와 비교하는 순서
 - [생활용품을 고르기 전에 제품 규격은 어떻게 확인하나요?](https://diyoutlet-homepage.vercel.app/story/how-to-check-product-size.html): 제품명 숫자, 상세 치수, 설치 공간 실측을 같은 기준으로 비교하는 순서
 - [작은 호기심으로 온라인 판매를 시작했습니다](https://diyoutlet-homepage.vercel.app/story/post.html?id=small-curiosity-diyoutlet-20260829): 직장생활과 유통 현장을 지켜본 경험이 온라인 판매로 이어진 이야기
 - [우리가 이 브랜드를 시작한 이유](https://diyoutlet-homepage.vercel.app/story/post.html?id=first-story-20260829): 생활 속 작은 불편에서 시작한 브랜드의 첫 마음
